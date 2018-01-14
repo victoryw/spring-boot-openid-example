@@ -1,14 +1,22 @@
 package com.victoryw.quartz.schedule;
 
 import org.quartz.SimpleTrigger;
+import org.quartz.spi.JobFactory;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 import org.springframework.scheduling.quartz.SpringBeanJobFactory;
 import com.victoryw.quartz.schedule.jobs.SampleJob;
+
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.util.Properties;
 
 @Configuration
 public class QuartzConfig {
@@ -21,14 +29,14 @@ public class QuartzConfig {
     }
 
     @Bean
-    public SchedulerFactoryBean schedulerFactoryBean(ApplicationContext applicationContext) {
+    public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource, JobFactory jobFactory) throws IOException {
         SchedulerFactoryBean schedulerFactory = new SchedulerFactoryBean();
 
         schedulerFactory.setOverwriteExistingJobs(true);
         schedulerFactory.setSchedulerName("quartz-scheduler");
-
-
-        schedulerFactory.setJobFactory(jobFactory(applicationContext));
+        schedulerFactory.setQuartzProperties(quartzProperties());
+        schedulerFactory.setDataSource(dataSource);
+        schedulerFactory.setJobFactory(jobFactory);
         schedulerFactory.setTriggers(sampleJobTrigger().getObject());
         return schedulerFactory;
     }
@@ -39,18 +47,27 @@ public class QuartzConfig {
         JobDetailFactoryBean jobDetailFactoryBean = new JobDetailFactoryBean();
         jobDetailFactoryBean.setJobClass(SampleJob.class);
         jobDetailFactoryBean.setName("sample");
+        jobDetailFactoryBean.setDurability(true);
+        //http://blog.csdn.net/lzj0470/article/details/17786289
+        // 抛异常 SchedulerException: Jobs added with no trigger must be durable
 
         return jobDetailFactoryBean;
     }
 
     @Bean(name = "sampleJobTrigger")
-    public SimpleTriggerFactoryBean sampleJobTrigger() {
-        SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
+    public CronTriggerFactoryBean sampleJobTrigger() {
+        CronTriggerFactoryBean factoryBean = new CronTriggerFactoryBean();
         factoryBean.setJobDetail(sampleJobDetails().getObject());
-        factoryBean.setStartDelay(3000);
-        factoryBean.setRepeatInterval(10000);
-        factoryBean.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
-        factoryBean.setMisfireInstruction(SimpleTrigger.MISFIRE_INSTRUCTION_RESCHEDULE_NEXT_WITH_REMAINING_COUNT);
+        factoryBean.setCronExpression("0/10 * * * * ?");
         return factoryBean;
     }
+
+    @Bean
+    public Properties quartzProperties() throws IOException {
+        PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
+        propertiesFactoryBean.setLocation(new ClassPathResource("/quartz.properties"));
+        propertiesFactoryBean.afterPropertiesSet();
+        return propertiesFactoryBean.getObject();
+    }
+
 }

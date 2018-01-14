@@ -1,1 +1,11 @@
-
+#spring.datasource.url=jdbc:postgresql://db/partstrading
+#spring.datasource.username=dmparts
+#spring.datasource.password=r0ys1ngh4m
+#spring.jpa.hibernate.ddl-auto=none
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/quartz
+    username: dmparts
+    password: r0ys1ngh4m
+server:
+  port: 8080
