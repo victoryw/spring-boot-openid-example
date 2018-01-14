@@ -1,5 +1,6 @@
 package com.victoryw.quartz.schedule.jobs;
 
+import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -8,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
-//@Slf4j
+@DisallowConcurrentExecution
 public class SampleJob implements Job {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     @Override
