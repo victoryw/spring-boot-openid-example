@@ -5,20 +5,29 @@
  * For more details take a look at the Java Quickstart chapter in the Gradle
  * user guide available at https://docs.gradle.org/3.5/userguide/tutorial_java_projects.html
  */
-
-// Apply the java plugin to add support for Java
-plugins {
-    id 'org.springframework.boot' version '1.5.9.RELEASE'
-    id 'java'
-    id 'idea'
-    id 'application'
+buildscript {
+    ext {
+        springBootVersion = '1.5.9.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
+
+
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'application'
+// Apply the java plugin to add support for Java
 
 // In this section you declare where to find the dependencies of your project
 repositories {
-    // Use jcenter for resolving your dependencies.
-    // You can declare any Maven/Ivy/file repository here.
-    jcenter()
+    mavenCentral()
 }
 
 sourceCompatibility = 1.8
@@ -31,14 +40,11 @@ jar {
 
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
-    compile 'com.google.guava:guava:21.0'
+
     compile 'org.springframework.boot:spring-boot-starter-web'
-
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile 'org.postgresql:postgresql:9.4.1212'
-
-    compile 'org.quartz-scheduler:quartz:2.3.0'
-    compile 'org.springframework:spring-context-support:4.3.13.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'org.springframework.security:spring-security-jwt:1.0.9.RELEASE'
+    compile('org.springframework.security.oauth:spring-security-oauth2:2.2.1.RELEASE')
 
     compileOnly 'org.projectlombok:lombok:1.16.20'
 

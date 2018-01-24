@@ -2,10 +2,12 @@
 #spring.datasource.username=dmparts
 #spring.datasource.password=r0ys1ngh4m
 #spring.jpa.hibernate.ddl-auto=none
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/quartz
-    username: dmparts
-    password: r0ys1ngh4m
 server:
-  port: 8080
+  port: 8089
+
+google:
+  clientId: foo
+  clientSecret: bar
+  accessTokenUri: http://localhost:3001/token
+  userAuthorizationUri: http://localhost:3001/auth
+  redirectUri: http://localhost:8085/abc
