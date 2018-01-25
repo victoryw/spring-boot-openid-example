@@ -10,4 +10,4 @@ google:
   clientSecret: bar
   accessTokenUri: http://localhost:3001/token
   userAuthorizationUri: http://localhost:3001/auth
-  redirectUri: http://localhost:8085/abc
+  redirectUri: http://localhost:8089/google-login
