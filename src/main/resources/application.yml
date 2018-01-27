@@ -6,8 +6,9 @@ server:
   port: 8089
 
 google:
-  clientId: foo
-  clientSecret: bar
-  accessTokenUri: http://localhost:3001/token
-  userAuthorizationUri: http://localhost:3001/auth
+  clientId: myapp
+  clientSecret: 4511e08a-393d-429e-8e50-9152cb029aac
+  accessTokenUri: http://localhost:8082/auth/realms/demo/protocol/openid-connect/token
+  userAuthorizationUri: http://localhost:8082/auth/realms/demo/protocol/openid-connect/auth
   redirectUri: http://localhost:8089/google-login
+  end_session_endpoint: http://localhost:8082/auth/realms/demo/protocol/openid-connect/logout

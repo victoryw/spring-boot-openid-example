@@ -1,4 +1,4 @@
-package com.victoryw.openid.controller;
+package com.victoryw.openid.DaimlerOpenIdProvider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.jwt.Jwt;
@@ -12,8 +12,9 @@ public class IdToken {
 
     private final Map idTokenInfo;
 
-    private IdToken(OAuth2AccessToken auth2Token) throws IOException {
+    IdToken(OAuth2AccessToken auth2Token) throws IOException {
         String idTokenValue = auth2Token.getAdditionalInformation().get("id_token").toString();
+
         Jwt tokenDecoded = JwtHelper.decode(idTokenValue);
         this.idTokenInfo = new ObjectMapper().readValue(tokenDecoded.getClaims(), Map.class);
     }

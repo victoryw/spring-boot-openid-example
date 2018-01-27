@@ -42,8 +42,8 @@ dependencies {
     // This dependency is found on compile classpath of this component and consumers.
 
     compile 'org.springframework.boot:spring-boot-starter-web'
-//    compile 'org.springframework.boot:spring-boot-starter-security'
-//    compile 'org.springframework.security:spring-security-jwt:1.0.9.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'org.springframework.security:spring-security-jwt:1.0.9.RELEASE'
     compile('org.springframework.security.oauth:spring-security-oauth2:2.2.1.RELEASE')
 
     compileOnly 'org.projectlombok:lombok:1.16.20'
@@ -51,3 +51,4 @@ dependencies {
     // Use JUnit test framework
     testCompile 'junit:junit:4.12'
 }
+

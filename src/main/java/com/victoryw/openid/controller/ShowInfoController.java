@@ -16,39 +16,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-public class HomeController {
+public class ShowInfoController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final DaimlerSSOClient daimlerSSOClient;
 
     @Autowired
-    public HomeController(DaimlerSSOClient daimlerSSOClient) {
+    public ShowInfoController(DaimlerSSOClient daimlerSSOClient) {
         this.daimlerSSOClient = daimlerSSOClient;
     }
 
-    @RequestMapping("/authorization-endpoint")
+    @RequestMapping("/success")
     @ResponseBody
     public final String home() {
-        return daimlerSSOClient.getAuthorizationUrl();
+
+        return "success";
     }
-
-    @RequestMapping(value = "/google-login", method = RequestMethod.GET)
-    @ResponseBody
-    public final void getIdToken(HttpServletResponse httpServletResponse, @RequestParam("code") String code) throws IOException {
-        OidcUserDetail userDetail = daimlerSSOClient.getUserDetail(code);
-        Cookie cookie = new Cookie("id", userDetail.getSub());
-        cookie.setMaxAge(-1);
-        httpServletResponse.addCookie(cookie);
-        httpServletResponse.sendRedirect("/google-login-2");
-
-    }
-
-    @RequestMapping("/end-session-end-point")
-    @ResponseBody
-    public final String logout(){
-        return daimlerSSOClient.getEndSessionEndPoint();
-    }
-
 }
 
 

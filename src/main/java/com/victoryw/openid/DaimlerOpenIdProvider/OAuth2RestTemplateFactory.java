@@ -1,4 +1,4 @@
-package com.victoryw.openid.controller;
+package com.victoryw.openid.DaimlerOpenIdProvider;
 
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;

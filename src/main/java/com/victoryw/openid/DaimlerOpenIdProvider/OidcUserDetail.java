@@ -1,4 +1,4 @@
-package com.victoryw.openid.controller;
+package com.victoryw.openid.DaimlerOpenIdProvider;
 
 import lombok.Getter;
 import lombok.Setter;

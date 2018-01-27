@@ -1,28 +1,26 @@
-package com.victoryw.openid.controller;
-
-import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
+package com.victoryw.openid.DaimlerOpenIdProvider;
 
 import java.io.IOException;
 
 public class DaimlerSSOClient {
 
-    private final AuthorizationCodeResourceDetails oAuthResource;
+    private final OpenIdResourceDetails openIdResourceDetails;
 
-    public DaimlerSSOClient(AuthorizationCodeResourceDetails authorizationCodeResourceDetails) {
-        this.oAuthResource = authorizationCodeResourceDetails;
+    public DaimlerSSOClient(OpenIdResourceDetails openIdResourceDetails) {
+        this.openIdResourceDetails = openIdResourceDetails;
     }
 
-    String getAuthorizationUrl() {
+    public String getAuthorizationUrl() {
         return String.format("%s?client_id=%s&response_type=%s&scope=%s&redirect_uri=%s",
-                oAuthResource.getUserAuthorizationUri(),
-                oAuthResource.getClientId(),
+                openIdResourceDetails.getUserAuthorizationUri(),
+                openIdResourceDetails.getClientId(),
                 "code",
                 "openid",
-                oAuthResource.getPreEstablishedRedirectUri());
+                openIdResourceDetails.getPreEstablishedRedirectUri());
     }
 
-    OidcUserDetail getUserDetail(String code) throws IOException {
-        TokenProvider tokenProvider = new TokenProvider(code, this.oAuthResource);
+    public OidcUserDetail getUserDetail(String code) throws IOException {
+        TokenProvider tokenProvider = new TokenProvider(code, this.openIdResourceDetails);
         tokenProvider.invoke();
         IdToken idToken = tokenProvider.getIdToken();
 
@@ -33,5 +31,8 @@ public class DaimlerSSOClient {
     }
 
 
+    public String getEndSessionEndPoint() {
+        return openIdResourceDetails.getEndSessionEndPoint();
+    }
 }
 
