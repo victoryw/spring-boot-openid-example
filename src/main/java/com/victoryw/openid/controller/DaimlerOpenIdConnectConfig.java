@@ -1,4 +1,4 @@
-package com.victoryw.quartz.controller;
+package com.victoryw.openid.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +30,7 @@ public class DaimlerOpenIdConnectConfig {
     private String redirectUri;
 
     @Bean
-    public OAuth2ProtectedResourceDetails googleOpenId() {
+    public AuthorizationCodeResourceDetails googleOpenId() {
         AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
         details.setClientId(clientId);
         details.setClientSecret(clientSecret);
@@ -42,10 +42,5 @@ public class DaimlerOpenIdConnectConfig {
 
 
         return details;
-    }
-
-    @Bean
-    public OAuth2RestTemplate googleOpenIdTemplate(OAuth2ClientContext clientContext) {
-        return new OAuth2RestTemplate(googleOpenId(), clientContext);
     }
 }
