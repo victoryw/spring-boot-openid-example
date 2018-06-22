@@ -1,12 +1,12 @@
-package com.victoryw.openid.DaimlerOpenIdProvider;
+package com.victoryw.openid.provider;
 
 import java.io.IOException;
 
-public class DaimlerSSOClient {
+public class SSOClient {
 
     private final OpenIdResourceDetails openIdResourceDetails;
 
-    public DaimlerSSOClient(OpenIdResourceDetails openIdResourceDetails) {
+    public SSOClient(OpenIdResourceDetails openIdResourceDetails) {
         this.openIdResourceDetails = openIdResourceDetails;
     }
 

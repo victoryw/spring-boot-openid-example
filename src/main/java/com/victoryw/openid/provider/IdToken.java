@@ -1,4 +1,4 @@
-package com.victoryw.openid.DaimlerOpenIdProvider;
+package com.victoryw.openid.provider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.jwt.Jwt;

@@ -1,4 +1,4 @@
-package com.victoryw.openid.DaimlerOpenIdProvider;
+package com.victoryw.openid.provider;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;

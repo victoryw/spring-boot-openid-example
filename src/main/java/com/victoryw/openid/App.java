@@ -8,22 +8,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 
 @SpringBootApplication
-@EnableWebSecurity
-public class App extends WebSecurityConfigurerAdapter {
-
+public class App {
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
     }
-
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().
-                sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
-                and().
-                authorizeRequests().
-                anyRequest().permitAll();
-
-        http.headers().cacheControl();
-    }
 }
+
+

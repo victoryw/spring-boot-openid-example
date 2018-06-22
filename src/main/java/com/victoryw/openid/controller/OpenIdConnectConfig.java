@@ -1,18 +1,17 @@
 package com.victoryw.openid.controller;
 
-import com.victoryw.openid.DaimlerOpenIdProvider.DaimlerSSOClient;
-import com.victoryw.openid.DaimlerOpenIdProvider.OpenIdResourceDetails;
+import com.victoryw.openid.provider.SSOClient;
+import com.victoryw.openid.provider.OpenIdResourceDetails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 
 import java.util.Arrays;
 
 @Configuration
 @EnableOAuth2Client
-public class DaimlerOpenIdConnectConfig {
+public class OpenIdConnectConfig {
     @Value("${google.clientId}")
     private String clientId;
 
@@ -47,7 +46,9 @@ public class DaimlerOpenIdConnectConfig {
     }
 
     @Bean
-    public DaimlerSSOClient daimlerSSOClient(){
-        return new DaimlerSSOClient(googleOpenId());
+    public SSOClient daimlerSSOClient(){
+        return new SSOClient(googleOpenId());
     }
 }
+
+

@@ -1,7 +1,7 @@
 package com.victoryw.openid.controller;
 
-import com.victoryw.openid.DaimlerOpenIdProvider.DaimlerSSOClient;
-import com.victoryw.openid.DaimlerOpenIdProvider.OidcUserDetail;
+import com.victoryw.openid.provider.SSOClient;
+import com.victoryw.openid.provider.OidcUserDetail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,34 +19,34 @@ import java.io.IOException;
 public class HomeController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final DaimlerSSOClient daimlerSSOClient;
+    private final SSOClient SSOClient;
 
     @Autowired
-    public HomeController(DaimlerSSOClient daimlerSSOClient) {
-        this.daimlerSSOClient = daimlerSSOClient;
+    public HomeController(SSOClient SSOClient) {
+        this.SSOClient = SSOClient;
     }
 
-    @RequestMapping("/authorization-endpoint")
+    @RequestMapping("/sso/authorization-endpoint")
     @ResponseBody
     public final String home() {
-        return daimlerSSOClient.getAuthorizationUrl();
+        return SSOClient.getAuthorizationUrl();
     }
 
-    @RequestMapping(value = "/google-login", method = RequestMethod.GET)
+    @RequestMapping(value = "/sso/google-login", method = RequestMethod.GET)
     @ResponseBody
     public final void getIdToken(HttpServletResponse httpServletResponse, @RequestParam("code") String code) throws IOException {
-        OidcUserDetail userDetail = daimlerSSOClient.getUserDetail(code);
+        OidcUserDetail userDetail = SSOClient.getUserDetail(code);
         Cookie cookie = new Cookie("id", userDetail.getSub());
-        cookie.setMaxAge(-1);
+        cookie.setMaxAge(10);
         httpServletResponse.addCookie(cookie);
         httpServletResponse.sendRedirect("/success");
 
     }
 
-    @RequestMapping("/end-session-end-point")
+    @RequestMapping("/sso/end-session-end-point")
     @ResponseBody
     public final String logout(){
-        return daimlerSSOClient.getEndSessionEndPoint();
+        return SSOClient.getEndSessionEndPoint();
     }
 
 }
